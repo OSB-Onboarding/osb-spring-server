@@ -15,7 +15,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 import org.springframework.web.servlet.config.annotation.PathMatchConfigurer;
 import org.springframework.web.util.UrlPathHelper;
 
-
 @SpringBootApplication
 @EnableSwagger2
 @ComponentScan(basePackages = { "io.swagger", "io.swagger.api" , "io.swagger.configuration"})
@@ -29,19 +28,20 @@ public class Swagger2SpringBoot implements CommandLineRunner {
     }
 
     public static void main(String[] args) throws Exception {
-        System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
+    	System.setProperty("org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH", "true");
         new SpringApplication(Swagger2SpringBoot.class).run(args);
     }
     
     @Configuration
     static class CustomPathMatch extends WebMvcConfigurerAdapter {
-        @Override
-        public void configurePathMatch(PathMatchConfigurer configurer) {
-            UrlPathHelper urlPathHelper = new UrlPathHelper();
-            urlPathHelper.setUrlDecode(false);
-            configurer.setUrlPathHelper(urlPathHelper);
-        }
+	    @Override
+	    public void configurePathMatch(PathMatchConfigurer configurer) {
+	        UrlPathHelper urlPathHelper = new UrlPathHelper();
+	        urlPathHelper.setUrlDecode(false);
+	        configurer.setUrlPathHelper(urlPathHelper);
+	    }
     }
+    
 
     @Configuration
     static class MyConfig extends WebMvcConfigurerAdapter {
